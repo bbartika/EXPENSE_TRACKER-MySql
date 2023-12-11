@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 
 const sequelize = new Sequelize(
-    const port='3000'
+    
     website=http://51.20.254.16:3000
     
    {
