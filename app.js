@@ -46,10 +46,15 @@ user.hasMany(filesDownloaded)
 filesDownloaded.belongsTo(user)
 
 
-sequelize.sync({force:true}).then(()=>{
-    app.listen(PORT)
+// ...
 
-})
+sequelize.sync({ force: false }).then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+});
+
+// ...
 
 
  
