@@ -11,7 +11,7 @@ const premiumRoute=require('./routes/premium')
 const passwordRoute=require('./routes/password')
 
 const sequelize=require('./util/database')
-
+const PORT = process.env.PORT;
 // modals imported
 const user=require('./model/user')
 const expense=require('./model/expense')
@@ -47,7 +47,7 @@ filesDownloaded.belongsTo(user)
 
 
 sequelize.sync({force:true}).then(()=>{
-    app.listen(3000)
+    app.listen(PORT)
 
 })
 
