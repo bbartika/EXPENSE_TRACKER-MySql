@@ -9,6 +9,7 @@ const expenseRoute=require('./routes/expense')
 const  purchaseRoute=require('./routes/purchase')
 const premiumRoute=require('./routes/premium')
 const passwordRoute=require('./routes/password')
+const report= require('./routes/reports');
 
 const sequelize=require('./util/database')
 const PORT = process.env.PORT;
@@ -22,7 +23,7 @@ const  filesDownloaded=require('./model/filesDownloaded')
 
 const app=express()
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 app.use(express.static('public'));
 
@@ -31,6 +32,7 @@ app.use(express.static('public'));
  app.use('/purchase',purchaseRoute)
  app.use('/premium',premiumRoute)
  app.use('/password',passwordRoute)
+app.use('/report',report);
 
 //relations
 user.hasMany(expense)
