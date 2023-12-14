@@ -1,29 +1,51 @@
-const loginForm=document.querySelector('#loginform')
-let loginError=document.querySelector('#loginerror')
+const emailValue = document.getElementById("email");
+const passwordValue = document.getElementById("password");
 
-loginForm.addEventListener('submit',(e)=>{
-e.preventDefault()
-let email= document.querySelector('.loginemail')
-let password=document.querySelector('.loginpassword')
-const details={
-useremail:email.value,
-userpassword:password.value
+function Login(e) {
+
+    e.preventDefault();
+
+
+    const email = emailValue.value;
+    const password = passwordValue.value;
+    const userData = {
+        email: email,
+        password: password
+    }
+
+    checkData(userData);
+
 }
+async function checkData(userData) {
 
-axios.post("http://localhost:3000/user/login",details).then((res)=>{
+    try {
 
-alert(res.data.message)
-const token=res.data.token
-const isPremium=res.data.isPremium
-localStorage.setItem('token',token)
-window.location.href='expense.html'
+        let res = await axios.post("/user-login/login", userData);
+        console.log(res.data);
+        if (res.status === 200) {
+            alert("Login successful!");
+            localStorage.setItem('token',res.data.token);
+            window.location.href="index3";
+        }
+
+        emailValue.value = '';
+        passwordValue.value = '';
 
 
- }).catch((err)=>{
 
-    loginError.innerHTML = `Error: ${err.response.data.error}`
+    } catch (err) {
+        if (err.response) {
+            if (err.response.status === 404) {
+                alert("User does not exist");
+            } else if (err.response.status === 401) {
+                alert("Wrong Password");
+            }
+            else if (err.response.status === 500) {
+                alert("An error occurred during login.");
+            }
+        } else {
+            console.error('Error:', err);
+        }
+    }
 
-
- })
-
-})
+}
