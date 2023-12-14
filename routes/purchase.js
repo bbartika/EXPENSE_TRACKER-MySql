@@ -1,11 +1,13 @@
-const express=require('express')
-const router=express.Router()
+const express = require('express');
 
+const purchase = require('../controllers/purchase');
 
-const purchaseController=require('../controller/purchase')
- const userAuthentication=require('../middleware/auth')
+const userautheticate=require('../middleware/auth');
 
-router.get('/premiummembership',userAuthentication.authenticate,purchaseController.purchasePremium)
+const router = express.Router();
 
-router.post('/updatetransactionstatus',userAuthentication.authenticate,purchaseController.updateTransaction)
-module.exports=router
+router.get('/premiummembership', userautheticate.authenticate,purchase.purchasepremium);
+
+router.post('/updatetransactionstatus', userautheticate.authenticate, purchase.updateTransactionStatus)
+
+module.exports = router;
