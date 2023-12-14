@@ -31,7 +31,11 @@ app.use(express.static('public'));
  app.use('/purchase',purchaseRoute)
  app.use('/premium',premiumRoute)
  app.use('/password',passwordRoute)
-
+ app.use((req,res) =>{
+  console.log('urll',req.url);
+  console.log('Req is successful');
+  res.sendFile(path.join(_dirname,`view/${req.url}`));
+ })
 //relations
 user.hasMany(expense)
 expense.belongsTo(user)
