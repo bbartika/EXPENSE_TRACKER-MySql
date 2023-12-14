@@ -1,29 +1,66 @@
-const signUpForm=document.querySelector('#signupform')
-const signUpErrordiv=document.querySelector('#signuperror')
 
 
-signUpForm.addEventListener('submit',(e)=>{
-    e.preventDefault()
- const username=document.querySelector('.username')
-const useremail=document.querySelector('.useremail')
-const userpassword=document.querySelector('.userpassword')
+const name = document.getElementById("name");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const confirmPasswordField = document.getElementById("cpassword");
+const passwordError = document.getElementById("passwordError");
 
+function signup(event) {
+   
+    event.preventDefault();
+    const form = event.target;
+    const name = form.elements.name.value;
+    const email = form.elements.email.value;
+    const password = form.elements.password.value;
+    const confirmPassword = form.elements.cpassword.value;
+  
+     
 
-
-    const details={
-        name:username.value,
-        email:useremail.value,
-        password:userpassword.value
-
+   
+    if (password.length <= 6) {
+        document.body.innerHTML += '<div style="color: red;">password length must be greater than 6</div>';
     }
-    axios.post('http://localhost:3000/user/signup',details).then((res)=>{
-        console.log("hurr",res)
+    else if (password !== confirmPassword) {
+        passwordError.textContent = 'Passwords do not match';
+    }
 
-        window.location.href = 'login.html';
+    else {
+        const userData = {
+            Name: name,
+            Email: email,
+            Password: password
+        }
+        addUser(userData);
+    }
+}
+
+async function addUser(userData) {
+
+
+    try {
+
+        let response = await axios.post("/add-user/signup", userData);
+        if (response.status === 200) {
+            alert("User Successfully Created!");
+         
+            window.location.href="/login";
+
+        }
         
-        
-    }).catch((err)=>{
-        console.log(err)
-        signUpErrordiv.innerHTML=err.message
-    })
-})
+        name.value = '';
+        email.value = '';
+        password.value = '';
+    
+
+
+        console.log(response.data);
+
+    } catch (err) {
+        console.log(err);
+        alert("Bad Parameters, or Email already Exists")
+
+
+       
+    }
+}
