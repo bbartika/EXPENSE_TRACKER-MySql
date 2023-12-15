@@ -106,7 +106,7 @@ document.getElementById('rzp-button1').onclick = async function (e) {
     console.log(response);
     var options =
     {
-        "key": response.data.key_id, // enter the Key ID generated from the dashboard
+        "key": 'rzp_test_gquO3tf84QgBfL',//response.data.key_id, // enter the Key ID generated from the dashboard
         "order_id": response.data.order.id,// for one time payment
        //handling a success payment
         "handler": async function (response) {
